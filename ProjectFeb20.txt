@@ -1,0 +1,81 @@
+# PSEUDOCODE FOR MY PROJECT: Locating UCE cores and flanking regions
+# 1. Download Phyluce:
+# What Phyluce does – aligns assembled contigs back to their associated UCE loci, 
+removes duplicate matches, creates a taxon-specific database of contig-to-UCE matches, 
+and includes UCE loci from a known genome as outgroup sequences. (e.g. the chicken (Gallus gallus))
+
+# Make sure Anaconda is in my $PATH 
+# which python
+# python -V (in terminal)
+
+cd /usr/bin/
+pwd
+cd ~/
+pwd
+cd anaconda
+ls
+which python
+python -V
+
+
+# Add the Faircloth lab binstar repository to my .condarc:
+# conda config --add channels http://conda.binstar.org/faircloth-lab
+
+# Install Phyluce:
+# conda install phyluce
+
+
+
+# 2. Find UCE sequences: (not sure where this step fits in yet)
+# Avian UCE contigs are available on Dryad (http://datadryad.org/resource/doi:10.5061/dryad.sd080)
+# UCE contigs used in analyses are also available from Genbank (accessions: JQ328245 - JQ335930, KC358654 - KC403881)
+# Do I need to filter for anything? (software: Illumiprocessor, Sickle)
+# I don't think so.. the contigs have already been filtered
+
+
+#mkdir EEB234_UCE_project
+cd EEB234_UCE_project
+
+#curl https://raw.githubusercontent.com/faircloth-lab/uce-probe-sets/master/uce-2.5k-probe-set/uce-2.5k-probes.fasta > uce-2.5k-probes.fasta
+
+ls
+
+
+#3. Find where UCE probes are:
+# McCormack et al. used amniote probes for birds
+# LASTZ matches of amniote probes to avian species-specific contigs available on Dryad (http://datadryad.org/resource/doi:10.5061/dryad.sd080)
+
+#Matching contigs to probes
+
+#General approach:
+# make a directory for log files
+# mkdir log
+# match contigs to probes
+# match_contigs_to_probes.py \
+    --contigs /path/to/assembly/contigs/ \
+    --probes uce-5k-probes.fasta \
+    --output /path/to/uce/output \
+    --log-path log
+
+# On my terminal:
+
+# mkdir log
+# mkdir contigs
+# mkdir output
+
+# Match contigs to probes
+match_contigs_to_probes.py \
+    --contigs /Users/Vanessa/anaconda/EEB234_UCE_project/log/contigs \
+    --probes uce-2.5k-probes.fasta \
+    --output /Users/Vanessa/anaconda/EEB234_UCE_project/log/output \
+    --log-path log
+
+#I keep getting an error here – it’s saying the pathway for contigs is not a directory. I haven’t been able to fix this yet. Planning to meet with Princess next week.
+
+
+# After I download UCE sequences, I will align probe sequences to these loci
+# Then I will determine where the UCE cores vs. flanks are located
+
+# If I have time after these steps, I will compare UCE alignments of cores and flanks across species
+# Or I could start by just comparing alignments of cores and flanks between two species 
+that are representative of adaptive / non-adaptive radiations (e.g. hummingbird/violetear and mousebird)
